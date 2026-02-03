@@ -97,7 +97,22 @@ bool test_is_vowel() {
 /* Task 4.1 */
 
 bool test_is_tail() {
-  // TODO: Implement this function.
+  char testcase_1 = 'w';
+  bool output_1 = is_tail(testcase_1);
+  if (!assert_true("output_1 (w should be true)", output_1)) return false;
+
+  char testcase_2 = 'a';
+  bool output_2 = is_tail(testcase_2);
+  if (!assert_true("output_2 (a should be true)", output_2)) return false;
+
+  char testcase_3 = 's';
+  bool output_3 = is_tail(testcase_3);
+  if (!assert_true("output_3 (s should be true)", output_3)) return false;
+
+  char testcase_4 = 'd';
+  bool output_4 = is_tail(testcase_4);
+  if (!assert_true("output_4 (d should be true)", output_4)) return false;
+
   return true;
 }
 

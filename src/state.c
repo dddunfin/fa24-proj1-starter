@@ -53,13 +53,21 @@ game_state_t *create_default_state() {
 
 /* Task 2 */
 void free_state(game_state_t *state) {
-  // TODO: Implement this function.
+  if (state == NULL) return;
+  for (int i = 0; i < state->num_rows; i++) {
+    free(state->board[i]);
+  }
+  free(state->board);
+  free(state->snakes);
+  free(state);
   return;
 }
 
 /* Task 3 */
 void print_board(game_state_t *state, FILE *fp) {
-  // TODO: Implement this function.
+  for (int i = 0; i < state->num_rows; i++) {
+    fprintf(fp, "%s\n", state->board[i]);
+  }
   return;
 }
 
@@ -95,8 +103,8 @@ static void set_board_at(game_state_t *state, unsigned int row, unsigned int col
   Returns false otherwise.
 */
 static bool is_tail(char c) {
-  // TODO: Implement this function.
-  return true;
+  if (c == 'w' || c == 'a' || c == 's' || c == 'd') return true;
+  return false;
 }
 
 /*

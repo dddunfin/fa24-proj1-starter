@@ -113,8 +113,8 @@ static bool is_tail(char c) {
   Returns false otherwise.
 */
 static bool is_head(char c) {
-  // TODO: Implement this function.
-  return true;
+  if (c == 'W' || c == 'A' || c == 'S' || c == 'D' || c == 'x') return true;
+  return false;
 }
 
 /*
@@ -122,8 +122,10 @@ static bool is_head(char c) {
   The snake consists of these characters: "wasd^<v>WASDx"
 */
 static bool is_snake(char c) {
-  // TODO: Implement this function.
-  return true;
+  is_tail(c);
+  is_head(c);
+  if (c == '^' || c == '<' || c == '>' || c == 'v') return true;
+  return false;
 }
 
 /*
@@ -132,8 +134,11 @@ static bool is_snake(char c) {
   tail ("wasd").
 */
 static char body_to_tail(char c) {
-  // TODO: Implement this function.
-  return '?';
+  if (c == '^') return 'w';
+  if (c == '<') return 'a';
+  if (c == 'v') return 's';
+  if (c == '>') return 'd';
+  return 0;
 }
 
 /*
@@ -142,8 +147,11 @@ static char body_to_tail(char c) {
   body ("^<v>").
 */
 static char head_to_body(char c) {
-  // TODO: Implement this function.
-  return '?';
+  if (c == 'W') return '^';
+  if (c == 'A') return '<';
+  if (c == 'S') return 'v';
+  if (c == 'D') return '>';
+  return 0;
 }
 
 /*
@@ -152,7 +160,8 @@ static char head_to_body(char c) {
   Returns cur_row otherwise.
 */
 static unsigned int get_next_row(unsigned int cur_row, char c) {
-  // TODO: Implement this function.
+  if (c == 'v' || c == 's' || c == 'S') return cur_row + 1;
+  if (c == '^' || c == 'w' || c == 'W') return cur_row - 1;
   return cur_row;
 }
 
@@ -162,7 +171,8 @@ static unsigned int get_next_row(unsigned int cur_row, char c) {
   Returns cur_col otherwise.
 */
 static unsigned int get_next_col(unsigned int cur_col, char c) {
-  // TODO: Implement this function.
+  if (c == '>' || c == 'd' || c == 'D') return cur_col + 1;
+  if (c == '<' || c == 'a' || c == 'A') return cur_col - 1;
   return cur_col;
 }
 
@@ -174,8 +184,13 @@ static unsigned int get_next_col(unsigned int cur_col, char c) {
   This function should not modify anything.
 */
 static char next_square(game_state_t *state, unsigned int snum) {
-  // TODO: Implement this function.
-  return '?';
+  snake_t *snake = &state->snakes[snum];
+  unsigned int snake_head_col = snake->head_col;
+  unsigned int snake_head_row = snake->head_row;
+  char board_char = get_board_at(state, snake_head_row, snake_head_col);
+  unsigned int next_col = get_next_col(snake_head_col, board_char);
+  unsigned int next_row = get_next_row(snake_head_row, board_char);
+  return get_board_at(state, next_row, next_col);
 }
 
 /*

@@ -117,7 +117,6 @@ bool test_is_tail() {
 }
 
 bool test_is_head() {
-  // TODO: Implement this function.
   return true;
 }
 

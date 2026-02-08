@@ -205,7 +205,16 @@ static char next_square(game_state_t *state, unsigned int snum) {
   Note that this function ignores food, walls, and snake bodies when moving the head.
 */
 static void update_head(game_state_t *state, unsigned int snum) {
-  // TODO: Implement this function.
+  snake_t *snake = &state->snakes[snum];
+  unsigned int snake_head_col = snake->head_col;
+  unsigned int snake_head_row = snake->head_row;
+  char head_char = get_board_at(state, snake_head_row, snake_head_col);
+  unsigned int next_col = get_next_col(snake_head_col, head_char);
+  unsigned int next_row = get_next_row(snake_head_row, head_char);
+  set_board_at(state, next_row, next_col, head_char);
+  set_board_at(state, snake_head_row, snake_head_col, head_to_body(head_char));
+  snake->head_row = next_row;
+  snake->head_col = next_col;
   return;
 }
 
@@ -220,13 +229,38 @@ static void update_head(game_state_t *state, unsigned int snum) {
   ...in the snake struct: update the row and col of the tail
 */
 static void update_tail(game_state_t *state, unsigned int snum) {
-  // TODO: Implement this function.
+  snake_t *snake = &state->snakes[snum];
+  unsigned int snake_tail_col = snake->tail_col;
+  unsigned int snake_tail_row = snake->tail_row;
+  char tail_char = get_board_at(state, snake_tail_row, snake_tail_col);
+  unsigned int next_col = get_next_col(snake_tail_col, tail_char);
+  unsigned int next_row = get_next_row(snake_tail_row, tail_char);
+  char next_char = get_board_at(state, next_row, next_col);
+  set_board_at(state, next_row, next_col, body_to_tail(next_char));
+  set_board_at(state, snake_tail_row, snake_tail_col, ' ');
+  snake->tail_col = next_col;
+  snake->tail_row = next_row;
   return;
 }
 
 /* Task 4.5 */
 void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
-  // TODO: Implement this function.
+  unsigned int num_snakes = state->num_snakes; 
+  for (unsigned int snum = 0; snum < num_snakes; snum++) {
+    // snake_t *snake = &state->snakes[snum];
+    // if (!snake->live) continue;
+    // char next_char = next_square(state, snum);
+    // if (next_char == '*') {
+    //   update_head(state, snum);
+    //   add_food(state);
+    // } else if (next_char == '#' || (is_snake(next_char) && !is_tail(next_char))) {
+    //   snake->live = false;
+    //   set_board_at(state, snake->head_row, snake->head_col, 'x');
+    // } else {
+    //   update_head(state, snum);
+    //   update_tail(state, snum);
+    // }
+  }
   return;
 }
 
